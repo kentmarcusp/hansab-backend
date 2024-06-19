@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flyway-migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: flyway
+          image: homework:latest
+          env:
+            - name: FLYWAY_URL
+              value: "jdbc:h2:~/H2db/HansabDb;AUTO_SERVER=TRUE;MODE=MySQL"
+            - name: FLYWAY_USER
+              value: "sa"
+            - name: FLYWAY_PASSWORD
+              value: ""
+            - name: FLYWAY_LOCATIONS
+              value: "filesystem:/resources/db/migration"
+      restartPolicy: OnFailure
